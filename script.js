@@ -32,25 +32,56 @@ function playRound (computerChoice, playerChoice) {
         return "Tie";
     }
     else if(playerChoice === "rock" && computerChoice === "scissor") {
-        return "You Win " + playerChoice + " beats " + computerChoice;
+        return "win";
     }
     else if(playerChoice === "paper" && computerChoice === "rock") {
-        return "You Win " + playerChoice + " beats " + computerChoice;
+        return "win";
     } 
     else if(playerChoice === "scissor" && computerChoice === "paper") {
-        return "You Win " + playerChoice + " beats " + computerChoice;
+        return "win";
     }
     else {
         return "You Lose " + computerChoice + " beats " + playerChoice;
     }
 }
-let computerChoice = getComputerChoice();
-// console.log(playRound(computerChoice,playerChoice));
-//get the input from user (rock scissor or paper)
-let playerChoice = prompt("Enter your Choice: ");
-//repeat the steps 5 times 
 
-//game over , display won or lost
-// and an option to play again 
+// console.log(playRound(computerChoice,playerChoice));
+
+//repeat the steps 5 times 
+function game() {
+    let winCount = 0;
+    //welcome a player
+    alert("Welcome to the game of Rock Paper Scissor")
+    //loop for 5 times
+    for (let i = 0; i < 5; i++) {
+        //display the round
+        console.log("Round: " + (i+1));
+        //get the input from user (rock scissor or paper)
+        let playerChoice = prompt("Enter your Choice: ");
+        let computerChoice = getComputerChoice();
+        //play a round 
+        let roundResult = playRound(computerChoice, playerChoice);
+        if (roundResult === "win") {
+            winCount ++;
+        }
+    }
+    //shows the final winner 
+    if (winCount >= 3) {
+        console.log("Won " + winCount + " Rounds");
+    }
+    //game over , display won or lost
+    else {
+        console.log("Lost");
+    }
+    alert("GAME OVER");
+    //an option to replay 
+    let replay = prompt("Wanna play again? Y/N", "Y");
+    if (replay === "y" || replay === "Y") {
+        game();
+    }
+    else{
+        return;
+    }
+}
 
 
