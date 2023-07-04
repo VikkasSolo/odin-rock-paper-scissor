@@ -8,26 +8,48 @@ function getComputerChoice() {
     let choice;
     //if the randomNum is 1 then return rock 
     if (randomNum === 1) {
-        choice = "Rock";
+        choice = "rock";
         return choice;
     }
     //else if 2 then return paper 
     else if (randomNum === 2) {
-        choice = "Paper";
+        choice = "paper";
         return choice;
     }
     //else scissor
     else {
-        choice = "Scissor";
+        choice = "scissor";
         return choice;
 
     }
 }
+// console.log(getComputerChoice());
 
-console.log(getComputerChoice());
-//get the input from user (rock scissor or paper)
 //compare the two choices and return a winner 
+function playRound (computerChoice, playerChoice) {
+    playerChoice = playerChoice.toLowerCase();
+    if (computerChoice === playerChoice) {
+        return "Tie";
+    }
+    else if(playerChoice === "rock" && computerChoice === "scissor") {
+        return "You Win " + playerChoice + " beats " + computerChoice;
+    }
+    else if(playerChoice === "paper" && computerChoice === "rock") {
+        return "You Win " + playerChoice + " beats " + computerChoice;
+    } 
+    else if(playerChoice === "scissor" && computerChoice === "paper") {
+        return "You Win " + playerChoice + " beats " + computerChoice;
+    }
+    else {
+        return "You Lose " + computerChoice + " beats " + playerChoice;
+    }
+}
+let computerChoice = getComputerChoice();
+// console.log(playRound(computerChoice,playerChoice));
+//get the input from user (rock scissor or paper)
+let playerChoice = prompt("Enter your Choice: ");
 //repeat the steps 5 times 
+
 //game over , display won or lost
 // and an option to play again 
 
