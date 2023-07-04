@@ -61,17 +61,25 @@ function game() {
         let computerChoice = getComputerChoice();
         //play a round 
         let roundResult = playRound(computerChoice, playerChoice);
-        if (roundResult === "win") {
+        if (roundResult === "win" ) {
             winCount ++;
+            console.log("You Won This Round!!");
+        }
+        else if(roundResult === "Tie") {
+            console.log(roundResult);
+            winCount ++
+        }
+        else {
+            console.log(roundResult);
         }
     }
     //shows the final winner 
     if (winCount >= 3) {
-        console.log("Won " + winCount + " Rounds");
+        console.log("Won The Game");
     }
     //game over , display won or lost
     else {
-        console.log("Lost");
+        console.log("Lost The Game");
     }
     alert("GAME OVER");
     //an option to replay 
@@ -84,4 +92,4 @@ function game() {
     }
 }
 
-
+game();
