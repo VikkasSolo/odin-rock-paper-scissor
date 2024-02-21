@@ -50,6 +50,7 @@ function playRound (computerChoice, playerChoice) {
 //repeat the steps 5 times 
 function game() {
     let winCount = 0;
+    let lostCount = 0;
     //welcome a player
     alert("Welcome to the game of Rock Paper Scissor")
     //loop for 5 times
@@ -67,19 +68,22 @@ function game() {
         }
         else if(roundResult === "Tie") {
             console.log(roundResult);
-            winCount ++
         }
         else {
             console.log(roundResult);
+            lostCount++
         }
     }
     //shows the final winner 
-    if (winCount >= 3) {
-        console.log("Won The Game");
+    if (winCount === lostCount) {
+        console.log("The Game is Tie");
     }
     //game over , display won or lost
+    else if (winCount > lostCount){
+        console.log("WON The Game");
+    }
     else {
-        console.log("Lost The Game");
+        console.log("Lost the Game")
     }
     alert("GAME OVER");
     //an option to replay 
