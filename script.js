@@ -1,7 +1,20 @@
-// Rock paper scissor game
-//my algorithm for the game
+// Rock paper scissor game, Following ODIN PROJECT
 
-//make a random choice by computer
+//reference of some elements 
+let winCount = 0,
+    loseCount = 0,
+    tieCount = 0,
+    roundNumber = 0;
+const playerChoice = document.querySelector(".choiceContainer");
+const mainContainer = document.querySelector(".mainContainer");
+//Creating elements result in DOM
+const result = document.querySelector(".result");
+const resultDisplay = document.createElement("p");
+const roundDisplay = document.createElement("p");
+result.appendChild(resultDisplay);
+result.appendChild(roundDisplay);
+
+//returns the values of computerChoice
 function getComputerChoice() {
     // create a variable randomNum that contains numbers from 1 to 3 which are random
     let randomNum = Math.floor(Math.random() * 3 + 1);
@@ -23,77 +36,106 @@ function getComputerChoice() {
 
     }
 }
-// console.log(getComputerChoice());
+//restart 
+function restartGame(Node) {
+    //removes the gameOverDiv
+    Node.remove();
+    //re enables(make them visible)  the buttons and results of single round
+    mainContainer.style.visibility = "visible";
+    //resets the the values of single round
+    winCount = 0;
+    loseCount = 0;
+    roundNumber = 0;
+    tieCount = 0;
+    resultDisplay.textContent = "";
+    roundDisplay.textContent = "";
+}
 
-//compare the two choices and return a winner 
+//runs when game over
+function gameOver() {
+    //hides the main buttons and elements
+    mainContainer.style.visibility = "hidden";
+    //creates element to show result for five 
+    const gameOverDiv = document.createElement("div");  
+    const para = document.createElement("p")
+    const finalResult = document.createElement("h3");
+    //shows the result
+    para.textContent = `WON - ${winCount}, LOST - ${loseCount}, TIE - ${tieCount}`;
+    if(winCount > loseCount) {
+        finalResult.textContent = "YOU WON";
+    }
+    else if(winCount < loseCount) {
+        finalResult.textContent = "YOU LOST";
+    }
+    else {
+        finalResult.textContent = "TIE";
+    }
+    //appends the changed elements 
+    gameOverDiv.appendChild(finalResult);
+    gameOverDiv.appendChild(para);
+    //
+    const restart = document.createElement("button");
+    restart.textContent = "CLICK TO RESTART";
+    gameOverDiv.appendChild(restart);
+    //appends the div to the body
+    document.body.appendChild(gameOverDiv);
+    //adds addEventListener to restart button 
+    restart.addEventListener("click", e => {
+        //stops propagating, this resolved some bugs 
+        e.stopPropagation();
+        //calls restart function with gameOverDiv as the parameter
+        restartGame(gameOverDiv)
+    });
+}
+
+
+//compare the ComputerChoice and playerChoice and return win, tie, and lose string values as an output 
 function playRound (computerChoice, playerChoice) {
-    playerChoice = playerChoice.toLowerCase();
+    //exits the function after 5 turns
+    if (roundNumber == 5) {
+        gameOver();
+    }
+    //console.log(roundNumber, winCount,loseCount); --- for debugging
     if (computerChoice === playerChoice) {
-        return "Tie";
+        resultDisplay.textContent = `ComputerChoice - ${computerChoice}, TIE`;
+        tieCount ++;
     }
     else if(playerChoice === "rock" && computerChoice === "scissor") {
-        return "win";
+        resultDisplay.textContent =  `ComputerChoice - ${computerChoice}, YOU WON`;
+        winCount ++;
     }
     else if(playerChoice === "paper" && computerChoice === "rock") {
-        return "win";
+        resultDisplay.textContent =  `ComputerChoice - ${computerChoice}, YOU WON`;
+        winCount ++;
     } 
     else if(playerChoice === "scissor" && computerChoice === "paper") {
-        return "win";
+        resultDisplay.textContent =  `ComputerChoice - ${computerChoice}, YOU WON`;
+        winCount ++;
     }
     else {
-        return "You Lose " + computerChoice + " beats " + playerChoice;
+        resultDisplay.textContent =  `ComputerChoice - ${computerChoice}, YOU LOST`;
+        loseCount ++;
     }
+    roundNumber ++;
+    roundDisplay.textContent = `ROUND - ${roundNumber}`;
+    
 }
+ 
+//actual game starts at this point i think
+playerChoice.addEventListener("click", (e) => {
+    let target = e.target;
+    let computerChoice = getComputerChoice();
+    switch (target.id) {
+        case "rock":
+            playRound(computerChoice,target.id);
+            break;
+        case "paper":
+            playRound(computerChoice,target.id);
+            break;
+        case "scissor":
+            playRound(computerChoice,target.id);
+            break;
+    }
 
-// console.log(playRound(computerChoice,playerChoice));
+});
 
-//repeat the steps 5 times 
-function game() {
-    let winCount = 0;
-    let lostCount = 0;
-    //welcome a player
-    alert("Welcome to the game of Rock Paper Scissor")
-    //loop for 5 times
-    for (let i = 0; i < 5; i++) {
-        //display the round
-        console.log("Round: " + (i+1));
-        //get the input from user (rock scissor or paper)
-        let playerChoice = prompt("Enter your Choice: ");
-        let computerChoice = getComputerChoice();
-        //play a round 
-        let roundResult = playRound(computerChoice, playerChoice);
-        if (roundResult === "win" ) {
-            winCount ++;
-            console.log("You Won This Round!!");
-        }
-        else if(roundResult === "Tie") {
-            console.log(roundResult);
-        }
-        else {
-            console.log(roundResult);
-            lostCount++
-        }
-    }
-    //shows the final winner 
-    if (winCount === lostCount) {
-        console.log("The Game is Tie");
-    }
-    //game over , display won or lost
-    else if (winCount > lostCount){
-        console.log("WON The Game");
-    }
-    else {
-        console.log("Lost the Game")
-    }
-    alert("GAME OVER");
-    //an option to replay 
-    let replay = prompt("Wanna play again? Y/N", "Y");
-    if (replay === "y" || replay === "Y") {
-        game();
-    }
-    else{
-        return;
-    }
-}
-
-game();
